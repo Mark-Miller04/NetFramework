@@ -17,9 +17,4 @@ namespace UtilityLibrary
 			return ret;
 		}
 	}
-
-	public static class MathUtils
-	{
-
-	}
 }
