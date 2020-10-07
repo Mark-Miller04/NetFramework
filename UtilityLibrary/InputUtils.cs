@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace UtilityLibrary
@@ -33,6 +34,31 @@ namespace UtilityLibrary
 			}
 
 			return ret;
+		}
+
+		/// <summary>
+		/// Return a boolean value from the user's input based on a yes or no question.
+		/// </summary>
+		/// <param name="que">The question to ask the user.</param>
+		/// <returns>True if answered yes, False if answered no.</returns>
+		public static bool YesNoQuestion(string que)
+		{
+			Console.WriteLine(que);
+			Console.WriteLine("Answer (y)es or (n)o: ");
+			
+			while (true) {
+				string str = Console.ReadLine().ToUpper();
+				if(str == "YES" || str == "Y") {
+					return true;
+				}
+				else if (str == "NO" || str == "N") {
+					return false;
+				}
+				else {
+					Console.WriteLine("Input not understood, please answer with yes or no.");
+				}
+			}
+
 		}
 
 	}
