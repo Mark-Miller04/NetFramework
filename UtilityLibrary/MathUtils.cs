@@ -32,7 +32,7 @@ namespace UtilityLibrary
 			return primes.ToArray();
 		}
 
-
+		/*
 		/// <summary>
 		/// Find the set of prime numbers that exist beneath a given limit. A heavyweight function to handle very large inputs.
 		/// Use for inputs above the limit of a 32-bit integer: 2,147,483,647.
@@ -67,7 +67,7 @@ namespace UtilityLibrary
 
 			// The big integers handle 
 			BigInteger k = 0;
-			for (int i = 0, bit1 = 0; k * k <= limit; i++)
+			for (int i = 2, bit1 = 0; k * k <= limit; i++)
 			{
 				k = (bit1 * int.MaxValue) + i;
 				BigInteger l = k;
@@ -101,5 +101,6 @@ namespace UtilityLibrary
 			
 			return primes.ToArray();
 		}
+		*/
 	}
 }
