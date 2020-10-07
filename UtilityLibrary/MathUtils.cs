@@ -16,14 +16,14 @@ namespace UtilityLibrary
 		{
 			List<int> primes = new List<int>();
 			BitArray list = new BitArray(limit + 1, true);
-			
-			for(int i = 0; i * i <= limit; i++) {
+
+			for(int i = 2; i * i <= limit; i++) {
 				for(int j = i * i; j <= limit; j+=i) {
 					list[j] = false;
 				}
 			}
 
-			for (int i = 0; i <= limit; i++) {
+			for (int i = 2; i <= limit; i++) {
 				if(list[i]) {
 					primes.Add(i);
 				}
