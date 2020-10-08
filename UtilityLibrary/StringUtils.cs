@@ -1,24 +1,39 @@
 ﻿using System;
+using System.Linq;
 
 namespace UtilityLibrary
 {
 	public static class StringUtils
 	{
 		/// <summary>
-		/// Attempts to convert a string to an integer. No internal exception handling.
+		/// Attempts to convert a string to a 32-bit integer. No internal exception handling.
 		/// </summary>
 		/// <returns>Returns a valid integer if no exceptions thrown.</returns>
 		public static int StringToInt(string str)
 		{
-			int ret;
 			try {
-				ret = Convert.ToInt32(str);
+				int ret = Convert.ToInt32(str);
+				return ret;
 			}
 			catch(Exception e) {
 				throw e;
 			}
+		}
 
-			return ret;
+		/// <summary>
+		/// Attempts to convert a string to a 64-bit unsigned integer. No internal exception handling.
+		/// </summary>
+		/// <param name="str"></param>
+		/// <returns>Returns a valid 64-bit unsigned integer if no exceptions thrown.</returns>
+		public static ulong StringToULong(string str)
+		{
+			try {
+				ulong ret = Convert.ToUInt64(str);
+				return ret;
+			}
+			catch (Exception e) {
+				throw e;
+			}
 		}
 
 		/// <summary>
@@ -36,6 +51,19 @@ namespace UtilityLibrary
 			}
 
 			return ret + ".";
+		}
+
+		/// <summary>
+		/// Checks if a string is a palindrome, which reads the same forwards and backwards.
+		/// </summary>
+		/// <returns>True if it is, false if not.</returns>
+		public static bool IsStringPalindrome(string str)
+		{
+			string rev = (string)str.Reverse();
+			if (str == rev) {
+				return true;
+			}
+			return false;
 		}
 	}
 }

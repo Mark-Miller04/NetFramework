@@ -14,31 +14,15 @@ namespace UtilityLibrary
 		/// <returns>A valid integer value.</returns>
 		public static int RequestInt(string msg)
 		{
-			Console.WriteLine(msg);
-			int ret;
 			while(true)
 			{
+				Console.WriteLine(msg);
 				string str = Console.ReadLine();
-				try {
-					ret = StringUtils.StringToInt(str);
+				int ret = ConvertStringToInt(str);
+				if (ret != -1) {
+					return ret;
 				}
-				catch (FormatException){
-					Console.WriteLine("Read failed due to characters other than digits. " + msg);
-					continue;
-				}
-				catch (OverflowException) {
-					Console.WriteLine("Value is too large, exceeding max integer size of 2,147,483,647. " + msg);
-					continue;
-				}
-				catch (Exception e) {
-					Console.WriteLine(e.GetType() + e.Message);
-					continue;
-				}
-
-				break;
 			}
-
-			return ret;
 		}
 
 		/// <summary>
@@ -53,6 +37,8 @@ namespace UtilityLibrary
 			while (true)
 			{
 				string str = Console.ReadLine();
+				
+				
 				try {
 					int ret = StringUtils.StringToInt(str);
 					for (int i = 0; i < acceptable.Length; i++) {
@@ -75,6 +61,24 @@ namespace UtilityLibrary
 					continue;
 				}
 			}
+		}
+
+		/// <summary>
+		/// Request an integer from the user. Only returns a value less than a desired integer.
+		/// </summary>
+		/// <param name="limit">The limit of acceptable integers.</param>
+		/// <param name="msg">The question to prompt the user.</param>
+		/// <returns>An integer less than the limit.</returns>
+		public static int RequestIntLessThan(int limit, string msg)
+		{
+			string str = Console.ReadLine();
+			try
+			{
+
+			}
+
+
+			return 1;
 		}
 
 		/// <summary>
@@ -102,5 +106,27 @@ namespace UtilityLibrary
 
 		}
 
+		#region Private Helpers
+
+		private static int ConvertStringToInt(string str)
+		{
+			int ret = -1;
+			try {
+				ret = StringUtils.StringToInt(str);
+			}
+			catch (FormatException) {
+				Console.WriteLine("Read failed due to characters other than digits.");
+			}
+			catch (OverflowException) {
+				Console.WriteLine("Value is too large, exceeding max integer size of 2,147,483,647.");
+			}
+			catch (Exception e) {
+				Console.WriteLine($"{e.GetType()}: {e.Message}");
+			}
+
+			return ret;
+		}
+
+		#endregion
 	}
 }
