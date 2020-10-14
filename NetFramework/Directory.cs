@@ -15,7 +15,6 @@
 		namespace ConsoleApp
 		{
 			public static partial class Input { }
-			public static partial class ExHandling { }
 			public static partial class Interact { }
 		}
 	}

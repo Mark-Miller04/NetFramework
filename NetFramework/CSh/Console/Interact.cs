@@ -1,4 +1,5 @@
 ﻿using System;
+using MMNet.CSh.Strings;
 
 namespace MMNet.CSh.ConsoleApp
 {
@@ -39,7 +40,7 @@ namespace MMNet.CSh.ConsoleApp
 
 				try
 				{
-					int ret = StringUtils.StringToInt(str);
+					int ret = StringCompare.StringToInt(str);
 					for (int i = 0; i < acceptable.Length; i++)
 					{
 						if (ret == acceptable[i])
@@ -101,7 +102,7 @@ namespace MMNet.CSh.ConsoleApp
 			int ret = -1;
 			try
 			{
-				ret = StringUtils.StringToInt(str);
+				ret = StringCompare.StringToInt(str);
 			}
 			catch (FormatException)
 			{
