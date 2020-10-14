@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 
-namespace UtilityLibrary
+namespace MMNet.CSh.Strings
 {
-	public static class StringUtils
+	public static partial class StringCompare
 	{
 		/// <summary>
 		/// Attempts to convert a string to a 32-bit integer. No internal exception handling.
@@ -11,11 +11,13 @@ namespace UtilityLibrary
 		/// <returns>Returns a valid integer if no exceptions thrown.</returns>
 		public static int StringToInt(string str)
 		{
-			try {
+			try
+			{
 				int ret = Convert.ToInt32(str);
 				return ret;
 			}
-			catch(Exception e) {
+			catch (Exception e)
+			{
 				throw e;
 			}
 		}
@@ -27,11 +29,13 @@ namespace UtilityLibrary
 		/// <returns>Returns a valid 64-bit unsigned integer if no exceptions thrown.</returns>
 		public static ulong StringToULong(string str)
 		{
-			try {
+			try
+			{
 				ulong ret = Convert.ToUInt64(str);
 				return ret;
 			}
-			catch (Exception e) {
+			catch (Exception e)
+			{
 				throw e;
 			}
 		}
@@ -43,9 +47,11 @@ namespace UtilityLibrary
 		public static string StringListFromInts(int[] input)
 		{
 			string ret = "";
-			for(int i = 0; i < input.Length; i++) {
+			for (int i = 0; i < input.Length; i++)
+			{
 				ret += input[i];
-				if(i < input.Length - 1) {
+				if (i < input.Length - 1)
+				{
 					ret += ", ";
 				}
 			}
@@ -60,7 +66,8 @@ namespace UtilityLibrary
 		public static bool IsStringPalindrome(string str)
 		{
 			string rev = (string)str.Reverse();
-			if (str == rev) {
+			if (str == rev)
+			{
 				return true;
 			}
 			return false;
