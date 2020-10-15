@@ -2,12 +2,12 @@
 {
 	namespace CSh
 	{
-		namespace Strings
+		namespace StringMM
 		{
 			public static partial class StringCompare { }
 		}
 		
-		namespace Math
+		namespace MathMM
 		{
 			public static partial class Primes { }
 		}

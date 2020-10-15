@@ -1,5 +1,5 @@
 ﻿using System;
-using MMNet.CSh.Strings;
+using MMNet.CSh.StringMM;
 
 namespace MMNet.CSh.ConsoleApp
 {

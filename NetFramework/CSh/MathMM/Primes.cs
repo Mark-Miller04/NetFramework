@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MMNet.Net.CSh.Math
+namespace MMNet.CSh.MathMM
 {
 	public static partial class Primes
 	{

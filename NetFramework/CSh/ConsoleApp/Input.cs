@@ -116,29 +116,122 @@ namespace MMNet.CSh.ConsoleApp
 				Console.WriteLine("Input contained characters other than digits. Please enter only a number.");
 			}
 
-			return 0;
+			return default;
 		}
 		#endregion
 
-		#region Float Requests
-		public static float RequestFloat()
+		#region Double Requests
+		/// <summary>
+		/// Request a console input from the user and convert to a valid double.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		public static double RequestDouble(string msg)
 		{
-			throw new NotImplementedException();
+			double ret = double.MinValue;
+			while(ret == double.MinValue)
+			{
+				ret = TryDouble(msg);
+			}
+
+			return ret;
 		}
 
-		public static float RequestFloat(float limit)
+		/// <summary>
+		/// Request a console input from the user and convert to a valid double.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		/// <param name="limit">A positive or negative limit on input. Sets the upper or lower bounds. 0 is treated as an upper bound.</param>
+		public static double RequestDouble(string msg, double limit)
 		{
-			throw new NotImplementedException();
+			double ret = double.MinValue;
+			while (ret == double.MinValue)
+			{
+				ret = TryDouble(msg);
+				if (ret == double.MinValue) { continue; }
+				if (limit >= 0 && ret >= limit) {
+					Console.WriteLine($"Input was higher than acceptable limit. Please enter a value below {limit}.");
+					ret = double.MinValue;
+				}
+				else if (limit < 0 && ret <= limit) {
+					Console.WriteLine($"Input was lower than acceptable limit. Please enter a value above {limit}.");
+					ret = double.MinValue;
+				}
+			}
+
+			return ret;
 		}
 
-		public static float RequestFloat(float low, float high)
+		/// <summary>
+		/// Request a console input from the user and convert to a valid double.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		/// <param name="low">The lower bounds on a range of acceptable values.</param>
+		/// <param name="high">The upper bounds on a range of acceptable values.</param>
+		public static double RequestDouble(string msg, double low, double high)
 		{
-			throw new NotImplementedException();
+			double ret = double.MinValue;
+			while (ret == double.MinValue)
+			{
+				ret = TryDouble(msg);
+				if (ret == double.MinValue) { continue; }
+				if (ret < low || ret > high) {
+					Console.WriteLine($"Input was outside the acceptable range of {low} to {high}.");
+					ret = double.MinValue;
+				}
+			}
+
+			return ret;
 		}
 
-		public static float RequestFloat(float[] set, int prec)
+		/// <summary>
+		/// Request a console input from the user and convert to a valid double.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		/// <param name="set">A set of acceptable values to compare user input against.</param>
+		/// <param name="prec">A range to consider equivalency between user input and values in the set.</param>
+		public static double RequestDouble(string msg, double[] set, double prec)
 		{
-			throw new NotImplementedException();
+			double ret = double.MinValue;
+			prec = Math.Abs(prec);
+			while (ret == double.MinValue)
+			{
+				ret = TryDouble(msg);
+				if (ret == double.MinValue) { continue; }
+				bool accept = false;
+				foreach(double d in set) {
+					if (ret <= d + prec && ret >= d - prec) {
+						accept = true;
+						break;
+					}
+				}
+
+				if (!accept) {
+					Console.WriteLine($"Input did not match any acceptable values.");
+					ret = double.MinValue;
+				}
+			}
+
+			return ret;
+		}
+
+		private static double TryDouble(string msg)
+		{
+			Console.WriteLine(msg);
+			try {
+				double ret = Convert.ToDouble(Console.ReadLine());
+				if (ret == double.MinValue) {
+					throw new OverflowException();
+				}
+				return ret;
+			}
+			catch(OverflowException) {
+				Console.WriteLine("Input was out of floating point precision range.");
+			}
+			catch(FormatException) {
+				Console.WriteLine("Input contained characters other than digits. Please enter only a number. It can contain one decimal point.");
+			}
+
+			return default;
 		}
 		#endregion
 

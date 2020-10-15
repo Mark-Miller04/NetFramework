@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace MMNet.CSh.Strings
+namespace MMNet.CSh.StringMM
 {
 	public static partial class StringCompare
 	{
