@@ -52,8 +52,8 @@ namespace MMNet.CSh.ConsoleApp
 		/// Request a console input from the user and convert to a valid integer.
 		/// </summary>
 		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
-		/// <param name="low">The lower bounds on a range of acceptable values.</param>
-		/// <param name="high">The upper bounds on a range of acceptable values.</param>
+		/// <param name="low">The lower bounds on a range of acceptable values, inclusive.</param>
+		/// <param name="high">The upper bounds on a range of acceptable values, inclusive.</param>
 		public static int RequestInt(string msg, int low, int high)
 		{
 			int ret = int.MinValue;
@@ -91,7 +91,7 @@ namespace MMNet.CSh.ConsoleApp
 				}
 
 				if (!accept) {
-					Console.WriteLine($"Input did not match any acceptable values.");
+					Console.WriteLine("Input did not match any acceptable values.");
 					ret = int.MinValue;
 				}
 			}
@@ -165,8 +165,8 @@ namespace MMNet.CSh.ConsoleApp
 		/// Request a console input from the user and convert to a valid double.
 		/// </summary>
 		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
-		/// <param name="low">The lower bounds on a range of acceptable values.</param>
-		/// <param name="high">The upper bounds on a range of acceptable values.</param>
+		/// <param name="low">The lower bounds on a range of acceptable values, inclusive.</param>
+		/// <param name="high">The upper bounds on a range of acceptable values, inclusive.</param>
 		public static double RequestDouble(string msg, double low, double high)
 		{
 			double ret = double.MinValue;
@@ -189,6 +189,7 @@ namespace MMNet.CSh.ConsoleApp
 		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
 		/// <param name="set">A set of acceptable values to compare user input against.</param>
 		/// <param name="prec">A range to consider equivalency between user input and values in the set.</param>
+		/// <returns>The value in the set that the user input was within an acceptable range of.</returns>
 		public static double RequestDouble(string msg, double[] set, double prec)
 		{
 			double ret = double.MinValue;
@@ -201,6 +202,7 @@ namespace MMNet.CSh.ConsoleApp
 				foreach(double d in set) {
 					if (ret <= d + prec && ret >= d - prec) {
 						accept = true;
+						ret = d;
 						break;
 					}
 				}
@@ -236,31 +238,98 @@ namespace MMNet.CSh.ConsoleApp
 		#endregion
 
 		#region String Requests
-		public static float RequestString()
+		/// <summary>
+		/// Prompt the user to enter a string.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		public static string RequestString(string msg)
 		{
-			throw new NotImplementedException();
+			Console.WriteLine(msg);
+			return Console.ReadLine();
 		}
 
-		public static float RequestString(int limit)
+		/// <summary>
+		/// Prompt the user to enter a string.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		/// <param name="limit">An acceptable character length limit on the user input.</param>
+		public static string RequestString(string msg, uint limit)
 		{
-			throw new NotImplementedException();
+			while (true)
+			{
+				string ret = RequestString(msg);
+				if (ret.Length > limit) {
+					Console.WriteLine("The input was longer than the acceptable limit.");
+					continue;
+				}
+
+				return ret;
+			}
 		}
 
-		public static float RequestString(int low, int high)
+		/// <summary>
+		/// Prompt the user to enter a string.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		/// <param name="low">A lower bound on input character length, inclusive.</param>
+		/// <param name="high">An upper bound on input character length, inclusive.</param>
+		public static string RequestString(string msg, int low, int high)
 		{
-			throw new NotImplementedException();
+			while (true)
+			{
+				string ret = RequestString(msg);
+				if (ret.Length < low || ret.Length > high) {
+					Console.WriteLine("The input was outside the acceptable character length range.");
+					continue;
+				}
+
+				return ret;
+			}
 		}
 
-		public static float RequestString(string[] set)
+		/// <summary>
+		/// Prompt the user to enter a string.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		/// <param name="set">A set of acceptable strings to compare against. Only returns once the user input matches an item in the set.</param>
+		public static string RequestString(string msg, string[] set)
 		{
-			throw new NotImplementedException();
+			while(true)
+			{
+				string ret = RequestString(msg);
+				foreach(string s in set) {
+					if (ret == s) {
+						return s;
+					}
+				}
+
+				Console.WriteLine("Input did not match any acceptable values.");
+			}
 		}
 		#endregion
 
 		#region Boolean Requests
-		public static bool RequestBool()
+		/// <summary>
+		/// Prompt the user to answer a yes or no quetion.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		public static bool RequestYN(string msg)
 		{
-			throw new NotImplementedException();
+			while (true)
+			{
+				Console.WriteLine(msg);
+				string str = Console.ReadLine();
+				str.ToLower();
+				if (str == "yes" || str == "y" || str == "(y)es") {
+					return true;
+				}
+				else if (str == "no" || str == "n" || str == "(n)o") {
+					return false;
+				}
+				else {
+					Console.WriteLine("Input could not be read. Please enter (y)es or (n)o.");
+				}
+			}
 		}
 		#endregion
 	}
