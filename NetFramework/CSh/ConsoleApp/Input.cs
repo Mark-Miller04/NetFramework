@@ -120,6 +120,115 @@ namespace MMNet.CSh.ConsoleApp
 		}
 		#endregion
 
+		#region Unsigned Integer Requests
+		/// <summary>
+		/// Request a console input from the user and convert to a valid unsigned integer.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		public static uint RequestUInt(string msg)
+		{
+			uint ret = uint.MaxValue;
+			while (ret == uint.MaxValue)
+			{
+				ret = TryUInt(msg);
+			}
+
+			return ret;
+		}
+
+		/// <summary>
+		/// Request a console input from the user and convert to a valid unsigned integer.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		/// <param name="limit">A positive limit on input. Sets the upper bounds.</param>
+		public static uint RequestUInt(string msg, uint limit)
+		{
+			uint ret = uint.MaxValue;
+			while (ret == uint.MaxValue)
+			{
+				ret = TryUInt(msg);
+				if (ret == uint.MaxValue) { continue; }
+				if (ret > limit) {
+					Console.WriteLine($"Input was higher than acceptable limit. Please enter a value below {limit}.");
+					ret = uint.MaxValue;
+				}
+			}
+
+			return ret;
+		}
+
+		/// <summary>
+		/// Request a console input from the user and convert to a valid unsigned integer.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		/// <param name="low">The lower bounds on a range of acceptable values, inclusive.</param>
+		/// <param name="high">The upper bounds on a range of acceptable values, inclusive.</param>
+		public static uint RequestUInt(string msg, uint low, uint high)
+		{
+			uint ret = uint.MaxValue;
+			while (ret == uint.MaxValue)
+			{
+				ret = TryUInt(msg);
+				if (ret == uint.MaxValue) { continue; }
+				if (ret < low || ret > high) {
+					Console.WriteLine($"Input was outside the acceptable range of {low} to {high}.");
+					ret = uint.MaxValue;
+				}
+			}
+
+			return ret;
+		}
+
+		/// <summary>
+		/// Request a console input from the user and convert to a valid unsigned integer.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		/// <param name="set">A set of acceptable values to compare user input against.</param>
+		public static uint RequestUInt(string msg, uint[] set)
+		{
+			uint ret = uint.MaxValue;
+			while (ret == uint.MaxValue)
+			{
+				ret = TryUInt(msg);
+				if (ret == uint.MaxValue) { continue; }
+				bool accept = false;
+				foreach (uint i in set) {
+					if (ret == i) {
+						accept = true;
+						break;
+					}
+				}
+
+				if (!accept) {
+					Console.WriteLine("Input did not match any acceptable values.");
+					ret = uint.MaxValue;
+				}
+			}
+
+			return ret;
+		}
+
+		private static uint TryUInt(string msg)
+		{
+			Console.WriteLine(msg);
+			try {
+				uint ret = Convert.ToUInt32(Console.ReadLine());
+				if (ret == uint.MaxValue) {
+					throw new OverflowException();
+				}
+				return ret;
+			}
+			catch (OverflowException) {
+				Console.WriteLine("Input was out of unsigned integer range. Please enter a positive value below 4,294,967,925");
+			}
+			catch (FormatException) {
+				Console.WriteLine("Input contained characters other than digits. Please enter only a number.");
+			}
+
+			return default;
+		}
+		#endregion
+
 		#region Double Requests
 		/// <summary>
 		/// Request a console input from the user and convert to a valid double.
