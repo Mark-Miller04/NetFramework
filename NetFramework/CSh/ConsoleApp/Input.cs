@@ -99,6 +99,26 @@ namespace MMNet.CSh.ConsoleApp
 			return ret;
 		}
 
+		/// <summary>
+		/// Request a console input from the user and convert to a valid positive integer.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		public static int RequestPosInt(string msg)
+		{
+			int ret = int.MinValue;
+			while (ret == int.MinValue)
+			{
+				ret = TryInt(msg);
+				if (ret == int.MinValue) { continue; }
+				if (ret < 0) {
+					Console.WriteLine("Please enter a positive integer value.");
+					ret = int.MinValue;
+				}
+			}
+
+			return ret;
+		}
+
 		private static int TryInt(string msg)
 		{
 			Console.WriteLine(msg);
@@ -116,7 +136,7 @@ namespace MMNet.CSh.ConsoleApp
 				Console.WriteLine("Input contained characters other than digits. Please enter only a number.");
 			}
 
-			return default;
+			return int.MinValue;
 		}
 		#endregion
 
@@ -219,13 +239,13 @@ namespace MMNet.CSh.ConsoleApp
 				return ret;
 			}
 			catch (OverflowException) {
-				Console.WriteLine("Input was out of unsigned integer range. Please enter a positive value below 4,294,967,925");
+				Console.WriteLine("Input was out of unsigned integer range. Please enter a positive value below 4,294,967,295");
 			}
 			catch (FormatException) {
 				Console.WriteLine("Input contained characters other than digits. Please enter only a number.");
 			}
 
-			return default;
+			return uint.MaxValue;
 		}
 		#endregion
 
