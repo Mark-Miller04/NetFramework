@@ -249,6 +249,43 @@ namespace MMNet.CSh.ConsoleApp
 		}
 		#endregion
 
+		#region Unsigned Long Requests
+		/// <summary>
+		/// Request a console input from the user and convert to a valid unsigned long integer.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		public static ulong RequestULong(string msg)
+		{
+			ulong ret = ulong.MaxValue;
+			while (ret == ulong.MaxValue)
+			{
+				ret = TryULong(msg);
+			}
+
+			return ret;
+		}
+
+		private static ulong TryULong(string msg)
+		{
+			Console.WriteLine(msg);
+			try {
+				ulong ret = Convert.ToUInt64(Console.ReadLine());
+				if (ret == ulong.MaxValue) {
+					throw new OverflowException();
+				}
+				return ret;
+			}
+			catch (OverflowException) {
+				Console.WriteLine("Input was out of unsigned long integer range. Please enter a smaller value.");
+			}
+			catch (FormatException) {
+				Console.WriteLine("Input contained characters other than digits. Please enter only a number.");
+			}
+
+			return ulong.MaxValue;
+		}
+		#endregion
+
 		#region Double Requests
 		/// <summary>
 		/// Request a console input from the user and convert to a valid double.
@@ -338,6 +375,25 @@ namespace MMNet.CSh.ConsoleApp
 
 				if (!accept) {
 					Console.WriteLine($"Input did not match any acceptable values.");
+					ret = double.MinValue;
+				}
+			}
+
+			return ret;
+		}
+
+		/// <summary>
+		/// Request a console input from the user and convert to a valid positive double.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		public static double RequestPosDouble(string msg)
+		{
+			double ret = double.MinValue;
+			while (ret == double.MinValue)
+			{
+				ret = TryDouble(msg);
+				if (ret < 0) {
+					Console.WriteLine("Please enter a positive value.");
 					ret = double.MinValue;
 				}
 			}
