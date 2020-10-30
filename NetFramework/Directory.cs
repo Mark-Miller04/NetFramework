@@ -2,9 +2,10 @@
 {
 	namespace CSh
 	{
-		namespace StringMM
+		namespace ConsoleApp
 		{
-			public static partial class StringCompare { }
+			public static partial class Input { }
+			public static partial class Interact { }
 		}
 		
 		namespace MathMM
@@ -12,10 +13,9 @@
 			public static partial class Primes { }
 		}
 		
-		namespace ConsoleApp
+		namespace StringMM
 		{
-			public static partial class Input { }
-			public static partial class Interact { }
+			public static partial class StringCompare { }
 		}
 	}
 }

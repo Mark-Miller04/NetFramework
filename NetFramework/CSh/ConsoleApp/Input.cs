@@ -265,6 +265,28 @@ namespace MMNet.CSh.ConsoleApp
 			return ret;
 		}
 
+		/// <summary>
+		/// Request a console input from the user and convert to a valid unsigned long integer.
+		/// </summary>
+		/// <param name="msg">A concise prompt for the user to follow when entering input.</param>
+		/// <param name="limit">An upper bound on the value of acceptable user input.</param>
+		public static ulong RequestULong(string msg, ulong limit)
+		{
+
+			ulong ret = ulong.MaxValue;
+			while (ret == ulong.MaxValue)
+			{
+				ret = TryULong(msg);
+
+				if (ret > limit && ret != ulong.MaxValue) {
+					Console.WriteLine("Input is larger than acceptable limit. Please enter a smaller value.");
+					ret = ulong.MaxValue;
+				}
+			}
+
+			return ret;
+		}
+
 		private static ulong TryULong(string msg)
 		{
 			Console.WriteLine(msg);
@@ -276,7 +298,7 @@ namespace MMNet.CSh.ConsoleApp
 				return ret;
 			}
 			catch (OverflowException) {
-				Console.WriteLine("Input was out of unsigned long integer range. Please enter a smaller value.");
+				Console.WriteLine("Input was out of unsigned long integer range. Please enter a positive value.");
 			}
 			catch (FormatException) {
 				Console.WriteLine("Input contained characters other than digits. Please enter only a number.");
