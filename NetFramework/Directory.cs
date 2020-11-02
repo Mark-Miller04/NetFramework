@@ -5,7 +5,6 @@
 		namespace ConsoleApp
 		{
 			public static partial class Input { }
-			public static partial class Interact { }
 		}
 		
 		namespace MathMM
@@ -15,7 +14,8 @@
 		
 		namespace StringMM
 		{
-			public static partial class StringCompare { }
+			public static partial class StringManip { }
+			public static partial class StringSerialize { }
 		}
 	}
 }
